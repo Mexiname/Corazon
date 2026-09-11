@@ -1,0 +1,1911 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Para ti, que haces bonito mi mundo ♡</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+html,body{
+    width:100%;
+    height:100%;
+    overflow:hidden;
+    background:#000;
+    font-family:Georgia,"Times New Roman",serif;
+}
+
+body{
+    color:white;
+}
+
+#intro{
+    position:fixed;
+    inset:0;
+    z-index:1000;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(100,70,20,.15),
+            #000 65%
+        );
+    transition:opacity 1.5s ease,visibility 1.5s ease;
+}
+
+#intro.hidden{
+    opacity:0;
+    visibility:hidden;
+    pointer-events:none;
+}
+
+.introText{
+    color:#f9dfa0;
+    font-size:clamp(27px,5vw,58px);
+    letter-spacing:2px;
+    text-shadow:
+        0 0 8px white,
+        0 0 22px #d5a52f,
+        0 0 50px rgba(255,190,40,.75);
+    animation:breathing 3s ease-in-out infinite;
+}
+
+.enterButton{
+    margin-top:35px;
+    padding:16px 42px;
+    border:1px solid #e4bd59;
+    border-radius:50px;
+    color:#ffe7a3;
+    background:rgba(255,193,52,.05);
+    font-size:18px;
+    letter-spacing:2px;
+    cursor:pointer;
+    box-shadow:
+        0 0 15px rgba(255,195,60,.4),
+        inset 0 0 15px rgba(255,195,60,.08);
+    transition:.4s;
+}
+
+.enterButton:hover{
+    transform:scale(1.08);
+    background:rgba(255,190,50,.13);
+    box-shadow:
+        0 0 30px rgba(255,195,60,.7),
+        inset 0 0 20px rgba(255,195,60,.12);
+}
+
+@keyframes breathing{
+    0%,100%{transform:scale(1);}
+    50%{transform:scale(1.035);}
+}
+
+#titleContainer{
+    position:fixed;
+    z-index:20;
+    top:27px;
+    left:50%;
+    transform:translateX(-50%);
+    width:min(94vw,1000px);
+    text-align:center;
+    pointer-events:none;
+}
+
+#mainTitle{
+    color:#ffe18a;
+    font-size:clamp(25px,4.3vw,56px);
+    font-weight:500;
+    text-shadow:
+        0 0 5px white,
+        0 0 12px #ffd35c,
+        0 0 25px #dca528,
+        0 0 55px rgba(255,170,30,.8);
+}
+
+#subtitle{
+    margin-top:9px;
+    color:#f5ecd5;
+    font-size:clamp(11px,1.6vw,18px);
+    text-shadow:0 0 8px rgba(255,215,120,.7);
+}
+
+#musicButton{
+    position:fixed;
+    right:18px;
+    bottom:18px;
+    z-index:50;
+    border:1px solid rgba(255,215,120,.5);
+    background:rgba(0,0,0,.55);
+    color:#ffe5a0;
+    border-radius:30px;
+    padding:10px 16px;
+    cursor:pointer;
+    backdrop-filter:blur(8px);
+    font-size:14px;
+}
+
+#hint{
+    position:fixed;
+    bottom:20px;
+    left:50%;
+    transform:translateX(-50%);
+    z-index:20;
+    color:rgba(255,238,190,.55);
+    font-family:Arial,sans-serif;
+    font-size:12px;
+    pointer-events:none;
+    white-space:nowrap;
+}
+
+#photoMessage{
+    position:fixed;
+    left:50%;
+    bottom:65px;
+    transform:translate(-50%,20px);
+    z-index:100;
+    max-width:80vw;
+    padding:12px 22px;
+    border-radius:20px;
+    background:rgba(0,0,0,.8);
+    border:1px solid rgba(255,215,100,.45);
+    color:#ffe9af;
+    text-align:center;
+    opacity:0;
+    pointer-events:none;
+    transition:.5s;
+    backdrop-filter:blur(8px);
+}
+
+#photoMessage.show{
+    opacity:1;
+    transform:translate(-50%,0);
+}
+
+#loading{
+    position:fixed;
+    inset:0;
+    z-index:2000;
+    background:#000;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#e7c66f;
+    font-family:Arial,sans-serif;
+    letter-spacing:3px;
+    font-size:12px;
+    transition:opacity 1s;
+}
+
+#loading.finished{
+    opacity:0;
+    pointer-events:none;
+}
+
+#photoStatus{
+    position:fixed;
+    top:8px;
+    left:8px;
+    z-index:500;
+    font-family:Arial,sans-serif;
+    font-size:10px;
+    color:rgba(255,255,255,.3);
+    pointer-events:none;
+}
+
+@media(max-width:600px){
+
+    #mainTitle{
+        font-size:27px;
+    }
+
+    #subtitle{
+        font-size:11px;
+        padding:0 20px;
+    }
+
+    #hint{
+        display:none;
+    }
+
+    #musicButton{
+        bottom:14px;
+        right:14px;
+        font-size:12px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div id="loading">
+    PREPARANDO TU UNIVERSO ♡
+</div>
+
+<div id="intro">
+
+    <div class="introText">
+        Tengo algo especial para ti...
+    </div>
+
+    <button class="enterButton" id="enterButton">
+        ♡ Entrar ♡
+    </button>
+
+</div>
+
+<div id="titleContainer">
+
+    <h1 id="mainTitle">
+        Para ti, que haces bonito mi mundo ♡
+    </h1>
+
+    <div id="subtitle">
+        Porque hay personas que llegan y hacen que todo brille diferente...
+    </div>
+
+</div>
+
+<button id="musicButton">
+    ♫ Música
+</button>
+
+<div id="photoMessage"></div>
+
+<div id="hint">
+    Arrastra para mirar alrededor · rueda para acercarte
+</div>
+
+<div id="photoStatus"></div>
+
+<!--
+========================================================
+MUSICA
+========================================================
+
+Este archivo debe llamarse exactamente:
+
+musica.mp3
+
+Y debe estar junto a index.html.
+-->
+
+<audio id="music" loop preload="auto">
+    <source src="./musica.mp3" type="audio/mpeg">
+</audio>
+
+
+<script type="importmap">
+{
+    "imports":{
+        "three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+        "three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+    }
+}
+</script>
+
+
+<script type="module">
+
+import * as THREE from "three";
+
+import {
+    OrbitControls
+} from "three/addons/controls/OrbitControls.js";
+
+import {
+    EffectComposer
+} from "three/addons/postprocessing/EffectComposer.js";
+
+import {
+    RenderPass
+} from "three/addons/postprocessing/RenderPass.js";
+
+import {
+    UnrealBloomPass
+} from "three/addons/postprocessing/UnrealBloomPass.js";
+
+
+/* =====================================================
+   ARCHIVOS
+===================================================== */
+
+const PHOTOS = [
+    "./foto1.jpg",
+    "./foto2.jpg",
+    "./foto3.jpg",
+    "./foto4.jpg",
+    "./foto5.jpg"
+];
+
+const MUSIC = "./musica.mp3";
+
+
+/* =====================================================
+   ESCENA
+===================================================== */
+
+const scene = new THREE.Scene();
+
+scene.background = new THREE.Color(0x000000);
+
+scene.fog = new THREE.FogExp2(
+    0x000000,
+    .004
+);
+
+
+/* =====================================================
+   CAMARA
+===================================================== */
+
+const camera =
+new THREE.PerspectiveCamera(
+    52,
+    window.innerWidth / window.innerHeight,
+    .1,
+    2500
+);
+
+camera.position.set(
+    0,
+    12,
+    105
+);
+
+
+/* =====================================================
+   RENDERER
+===================================================== */
+
+const renderer =
+new THREE.WebGLRenderer({
+    antialias:true,
+    powerPreference:"high-performance"
+});
+
+renderer.setPixelRatio(
+    Math.min(window.devicePixelRatio,1.7)
+);
+
+renderer.setSize(
+    window.innerWidth,
+    window.innerHeight
+);
+
+renderer.outputColorSpace =
+THREE.SRGBColorSpace;
+
+renderer.toneMapping =
+THREE.ACESFilmicToneMapping;
+
+renderer.toneMappingExposure =
+1.2;
+
+document.body.appendChild(
+    renderer.domElement
+);
+
+
+/* =====================================================
+   CONTROLES 360
+===================================================== */
+
+const controls =
+new OrbitControls(
+    camera,
+    renderer.domElement
+);
+
+controls.enableDamping = true;
+controls.dampingFactor = .045;
+
+controls.enablePan = false;
+
+controls.minDistance = 60;
+controls.maxDistance = 145;
+
+controls.minPolarAngle =
+Math.PI*.25;
+
+controls.maxPolarAngle =
+Math.PI*.75;
+
+controls.autoRotate = true;
+controls.autoRotateSpeed = .15;
+
+controls.target.set(
+    0,
+    1,
+    0
+);
+
+
+/* =====================================================
+   LUCES
+===================================================== */
+
+scene.add(
+    new THREE.AmbientLight(
+        0xffe7a3,
+        .35
+    )
+);
+
+const centerLight =
+new THREE.PointLight(
+    0xffbf35,
+    16,
+    180
+);
+
+centerLight.position.set(
+    0,
+    5,
+    15
+);
+
+scene.add(centerLight);
+
+
+const sideLight =
+new THREE.PointLight(
+    0xffdf83,
+    5,
+    120
+);
+
+sideLight.position.set(
+    -40,
+    20,
+    30
+);
+
+scene.add(sideLight);
+
+
+/* =====================================================
+   BLOOM
+===================================================== */
+
+const composer =
+new EffectComposer(renderer);
+
+composer.addPass(
+    new RenderPass(
+        scene,
+        camera
+    )
+);
+
+const bloom =
+new UnrealBloomPass(
+    new THREE.Vector2(
+        window.innerWidth,
+        window.innerHeight
+    ),
+    1.35,
+    .8,
+    .65
+);
+
+composer.addPass(bloom);
+
+
+/* =====================================================
+   PARTICULAS
+===================================================== */
+
+function createParticles(
+    count,
+    spread,
+    size,
+    color,
+    opacity
+){
+
+    const geometry =
+    new THREE.BufferGeometry();
+
+    const positions =
+    new Float32Array(count*3);
+
+    for(
+        let i=0;
+        i<count;
+        i++
+    ){
+
+        const radius =
+        spread * (
+            .2 +
+            Math.random()*.8
+        );
+
+        const angle =
+        Math.random() *
+        Math.PI*2;
+
+        const y =
+        (Math.random()-.5) *
+        spread;
+
+        positions[i*3] =
+        Math.cos(angle)*radius;
+
+        positions[i*3+1] =
+        y;
+
+        positions[i*3+2] =
+        Math.sin(angle)*radius;
+    }
+
+    geometry.setAttribute(
+        "position",
+        new THREE.BufferAttribute(
+            positions,
+            3
+        )
+    );
+
+    const material =
+    new THREE.PointsMaterial({
+        color:color,
+        size:size,
+        transparent:true,
+        opacity:opacity,
+        depthWrite:false,
+        blending:
+        THREE.AdditiveBlending
+    });
+
+    return new THREE.Points(
+        geometry,
+        material
+    );
+}
+
+
+const stars =
+createParticles(
+    7000,
+    800,
+    .55,
+    0xffffff,
+    .78
+);
+
+scene.add(stars);
+
+
+const goldenDust =
+createParticles(
+    2400,
+    430,
+    .8,
+    0xffd45c,
+    .62
+);
+
+scene.add(goldenDust);
+
+
+const closeDust =
+createParticles(
+    1000,
+    190,
+    1.25,
+    0xffb82e,
+    .7
+);
+
+scene.add(closeDust);
+
+
+/* =====================================================
+   PLANETA
+===================================================== */
+
+const planetGroup =
+new THREE.Group();
+
+scene.add(planetGroup);
+
+
+const planet =
+new THREE.Mesh(
+
+    new THREE.SphereGeometry(
+        18,
+        64,
+        64
+    ),
+
+    new THREE.MeshStandardMaterial({
+
+        color:0x070605,
+
+        roughness:.48,
+
+        metalness:.75,
+
+        emissive:0x160d02,
+
+        emissiveIntensity:.35
+
+    })
+);
+
+planetGroup.add(planet);
+
+
+const planetGlow =
+new THREE.Mesh(
+
+    new THREE.SphereGeometry(
+        18.8,
+        48,
+        48
+    ),
+
+    new THREE.MeshBasicMaterial({
+
+        color:0xffbd35,
+
+        transparent:true,
+
+        opacity:.06,
+
+        side:THREE.BackSide,
+
+        blending:
+        THREE.AdditiveBlending
+
+    })
+);
+
+planetGroup.add(planetGlow);
+
+
+/* =====================================================
+   ANILLO
+===================================================== */
+
+const ring =
+new THREE.Mesh(
+
+    new THREE.TorusGeometry(
+        28.5,
+        1.05,
+        20,
+        180
+    ),
+
+    new THREE.MeshBasicMaterial({
+        color:0xffc83d,
+        transparent:true,
+        opacity:.95
+    })
+);
+
+ring.rotation.x = .28;
+
+planetGroup.add(ring);
+
+
+const ringGlow =
+new THREE.Mesh(
+
+    new THREE.TorusGeometry(
+        28.5,
+        3,
+        16,
+        180
+    ),
+
+    new THREE.MeshBasicMaterial({
+
+        color:0xffb51e,
+
+        transparent:true,
+
+        opacity:.13,
+
+        blending:
+        THREE.AdditiveBlending
+
+    })
+);
+
+ringGlow.rotation.x = .28;
+
+planetGroup.add(ringGlow);
+
+
+const orbitParticles =
+createParticles(
+    850,
+    62,
+    1.05,
+    0xffcf4c,
+    .65
+);
+
+planetGroup.add(
+    orbitParticles
+);
+
+
+/* =====================================================
+   FLORES
+===================================================== */
+
+function createFlower(scale=1){
+
+    const group =
+    new THREE.Group();
+
+
+    const petalMaterial =
+    new THREE.MeshStandardMaterial({
+
+        color:0xffc21c,
+
+        roughness:.58,
+
+        metalness:.04,
+
+        emissive:0x3b2200,
+
+        emissiveIntensity:.08
+
+    });
+
+
+    const centerMaterial =
+    new THREE.MeshStandardMaterial({
+
+        color:0x2a1705,
+
+        roughness:.8
+
+    });
+
+
+    const leafMaterial =
+    new THREE.MeshStandardMaterial({
+
+        color:0x193a18,
+
+        roughness:.85
+
+    });
+
+
+    const center =
+    new THREE.Mesh(
+
+        new THREE.SphereGeometry(
+            1.35,
+            24,
+            16
+        ),
+
+        centerMaterial
+
+    );
+
+    group.add(center);
+
+
+    for(
+        let i=0;
+        i<16;
+        i++
+    ){
+
+        const angle =
+        i*Math.PI*2/16;
+
+
+        const petal =
+        new THREE.Mesh(
+
+            new THREE.SphereGeometry(
+                1.3,
+                16,
+                10
+            ),
+
+            petalMaterial
+
+        );
+
+
+        petal.scale.set(
+            .55,
+            1.35,
+            .30
+        );
+
+
+        petal.position.set(
+
+            Math.cos(angle)*1.55,
+
+            Math.sin(angle)*1.55,
+
+            0
+
+        );
+
+
+        petal.rotation.z =
+        angle-Math.PI/2;
+
+
+        group.add(petal);
+
+    }
+
+
+    const stem =
+    new THREE.Mesh(
+
+        new THREE.CylinderGeometry(
+            .13,
+            .18,
+            5,
+            10
+        ),
+
+        leafMaterial
+
+    );
+
+    stem.position.y = -3.3;
+
+    group.add(stem);
+
+
+    for(
+        const side of [-1,1]
+    ){
+
+        const leaf =
+        new THREE.Mesh(
+
+            new THREE.SphereGeometry(
+                1.1,
+                14,
+                8
+            ),
+
+            leafMaterial
+
+        );
+
+
+        leaf.scale.set(
+            1.8,
+            .45,
+            .25
+        );
+
+
+        leaf.position.set(
+            side*.8,
+            -3.2,
+            .1
+        );
+
+
+        leaf.rotation.z =
+        side*.45;
+
+
+        group.add(leaf);
+
+    }
+
+
+    group.scale.setScalar(scale);
+
+    return group;
+}
+
+
+const flowers =
+new THREE.Group();
+
+scene.add(flowers);
+
+
+const flowerPositions = [
+
+    [-58,25,-12,3.1],
+    [58,25,-10,3.0],
+
+    [-49,-22,7,2.7],
+    [49,-22,8,2.8],
+
+    [-37,30,-7,2.0],
+    [37,31,-7,2.0],
+
+    [-64,5,4,2.2],
+    [64,5,4,2.2],
+
+    [-42,-5,-3,1.8],
+    [42,-5,-2,1.8],
+
+    [-25,29,-14,1.55],
+    [25,29,-14,1.55],
+
+    [-29,-29,4,1.45],
+    [29,-29,4,1.45],
+
+    [-72,-14,-3,1.4],
+    [72,-14,-3,1.4]
+
+];
+
+
+flowerPositions.forEach(
+    (data,index)=>{
+
+        const flower =
+        createFlower(data[3]);
+
+
+        flower.position.set(
+            data[0],
+            data[1],
+            data[2]
+        );
+
+
+        flower.rotation.z =
+        index%2===0
+        ? .25
+        : -.25;
+
+
+        flower.rotation.y =
+        index*.37;
+
+
+        flower.userData.baseY =
+        data[1];
+
+
+        flower.userData.offset =
+        index*.7;
+
+
+        flowers.add(flower);
+
+    }
+);
+
+
+/* =====================================================
+   FOTOS
+===================================================== */
+
+const photosGroup =
+new THREE.Group();
+
+scene.add(photosGroup);
+
+
+const photoPositions = [
+
+    [-50,15,20,8,.12],
+
+    [50,14,20,8,-.16],
+
+    [-46,-13,17,8,-.12],
+
+    [46,-12,17,8,.15],
+
+    [0,43,8,9,0]
+
+];
+
+
+const photoMessages = [
+
+    "Un recuerdo bonito de nosotros ♡",
+
+    "Contigo todo se siente diferente ♡",
+
+    "Una de mis partes favoritas de la vida ♡",
+
+    "Gracias por cada momento ♡",
+
+    "Tú haces bonito mi mundo ♡"
+
+];
+
+
+/*
+=========================================================
+   CARGA DE FOTOS CORREGIDA
+=========================================================
+*/
+
+const textureLoader =
+new THREE.TextureLoader();
+
+let loadedPhotos = 0;
+
+
+function loadPhoto(
+    path,
+    index
+){
+
+    return new Promise(
+        resolve=>{
+
+            textureLoader.load(
+
+                path,
+
+                texture=>{
+
+                    texture.colorSpace =
+                    THREE.SRGBColorSpace;
+
+                    loadedPhotos++;
+
+                    resolve(texture);
+
+                },
+
+                undefined,
+
+                error=>{
+
+                    console.error(
+                        "ERROR CARGANDO FOTO:",
+                        path,
+                        error
+                    );
+
+                    resolve(null);
+
+                }
+
+            );
+
+        }
+    );
+
+}
+
+
+async function createPhotos(){
+
+    for(
+        let index=0;
+        index<PHOTOS.length;
+        index++
+    ){
+
+        const texture =
+        await loadPhoto(
+            PHOTOS[index],
+            index
+        );
+
+
+        const data =
+        photoPositions[index];
+
+
+        const photoGroup =
+        new THREE.Group();
+
+
+        /*
+        -------------------------------------------------
+        SI LA FOTO EXISTE
+        -------------------------------------------------
+        */
+
+        if(texture){
+
+            const frame =
+            new THREE.Mesh(
+
+                new THREE.BoxGeometry(
+                    data[3]+1,
+                    data[3]*.73+1,
+                    .35
+                ),
+
+                new THREE.MeshStandardMaterial({
+
+                    color:0xffffff,
+
+                    roughness:.35,
+
+                    metalness:.1
+
+                })
+
+            );
+
+
+            photoGroup.add(frame);
+
+
+            const photo =
+            new THREE.Mesh(
+
+                new THREE.PlaneGeometry(
+                    data[3],
+                    data[3]*.73
+                ),
+
+                new THREE.MeshBasicMaterial({
+
+                    map:texture,
+
+                    side:
+                    THREE.DoubleSide
+
+                })
+
+            );
+
+
+            photo.position.z = .2;
+
+
+            photoGroup.add(photo);
+
+        }
+
+        /*
+        -------------------------------------------------
+        SI NO EXISTE
+        -------------------------------------------------
+        */
+
+        else{
+
+            const missingMaterial =
+            new THREE.MeshBasicMaterial({
+
+                color:0x241b08,
+
+                transparent:true,
+
+                opacity:.9
+
+            });
+
+
+            const missing =
+            new THREE.Mesh(
+
+                new THREE.PlaneGeometry(
+                    data[3],
+                    data[3]*.73
+                ),
+
+                missingMaterial
+
+            );
+
+
+            photoGroup.add(missing);
+
+        }
+
+
+        photoGroup.position.set(
+
+            data[0],
+            data[1],
+            data[2]
+
+        );
+
+
+        photoGroup.rotation.y =
+        data[4];
+
+
+        photoGroup.userData.index =
+        index;
+
+
+        photoGroup.userData.baseY =
+        data[1];
+
+
+        photoGroup.userData.offset =
+        index*.9;
+
+
+        photoGroup.userData.isPhoto =
+        !!texture;
+
+
+        photosGroup.add(
+            photoGroup
+        );
+
+    }
+
+
+    document
+    .getElementById("photoStatus")
+    .textContent =
+    loadedPhotos +
+    "/5 fotos cargadas";
+
+}
+
+
+createPhotos();
+
+
+/* =====================================================
+   FRASES
+===================================================== */
+
+const phraseGroup =
+new THREE.Group();
+
+scene.add(phraseGroup);
+
+
+const phrases = [
+
+    "Siempre tú",
+
+    "Mi lugar favorito",
+
+    "Contigo todo fluye",
+
+    "Me haces sonreír",
+
+    "Qué bonito coincidir",
+
+    "Eres especial",
+
+    "Tú haces la diferencia",
+
+    "Me encanta conocerte",
+
+    "Gracias por existir",
+
+    "Eres mi calma",
+
+    "Quiero seguir aquí",
+
+    "Me importas mucho",
+
+    "Algo bonito",
+
+    "Poco a poco, tú"
+
+];
+
+
+const phrasePositions = [
+
+    [-66,31,4],
+    [-63,-3,9],
+    [-57,-28,10],
+
+    [-35,40,0],
+
+    [-20,-38,12],
+
+    [0,-42,15],
+
+    [20,-38,12],
+
+    [35,40,0],
+
+    [57,-28,10],
+
+    [63,-3,9],
+
+    [66,31,4],
+
+    [-10,35,-8],
+
+    [10,35,-8],
+
+    [0,29,-17]
+
+];
+
+
+function createTextSprite(text){
+
+    const canvas =
+    document.createElement("canvas");
+
+    canvas.width = 700;
+    canvas.height = 160;
+
+    const ctx =
+    canvas.getContext("2d");
+
+    ctx.clearRect(
+        0,
+        0,
+        canvas.width,
+        canvas.height
+    );
+
+    ctx.font =
+    "italic 42px Georgia";
+
+    ctx.textAlign =
+    "center";
+
+    ctx.textBaseline =
+    "middle";
+
+    ctx.shadowColor =
+    "rgba(255,205,90,.9)";
+
+    ctx.shadowBlur = 15;
+
+    ctx.fillStyle =
+    "#fff5d4";
+
+    ctx.fillText(
+        text,
+        canvas.width/2,
+        canvas.height/2
+    );
+
+    const texture =
+    new THREE.CanvasTexture(canvas);
+
+    texture.colorSpace =
+    THREE.SRGBColorSpace;
+
+    const material =
+    new THREE.SpriteMaterial({
+
+        map:texture,
+
+        transparent:true,
+
+        depthWrite:false
+
+    });
+
+    const sprite =
+    new THREE.Sprite(material);
+
+    sprite.scale.set(
+        14,
+        3.2,
+        1
+    );
+
+    return sprite;
+}
+
+
+phrases.forEach(
+    (phrase,index)=>{
+
+        const position =
+        phrasePositions[index];
+
+        const sprite =
+        createTextSprite(phrase);
+
+        sprite.position.set(
+            position[0],
+            position[1],
+            position[2]
+        );
+
+        sprite.userData.baseY =
+        position[1];
+
+        sprite.userData.offset =
+        index*.43;
+
+        phraseGroup.add(sprite);
+
+    }
+);
+
+
+/* =====================================================
+   CORAZONES
+===================================================== */
+
+const heartGroup =
+new THREE.Group();
+
+scene.add(heartGroup);
+
+
+function createHeart(){
+
+    const shape =
+    new THREE.Shape();
+
+    shape.moveTo(0,-.8);
+
+    shape.bezierCurveTo(
+        -1.6,-1.8,
+        -2.2,.2,
+        0,1.3
+    );
+
+    shape.bezierCurveTo(
+        2.2,.2,
+        1.6,-1.8,
+        0,-.8
+    );
+
+    const geometry =
+    new THREE.ShapeGeometry(shape);
+
+    const material =
+    new THREE.MeshBasicMaterial({
+
+        color:0xffc94c,
+
+        transparent:true,
+
+        opacity:.55,
+
+        side:THREE.DoubleSide,
+
+        blending:
+        THREE.AdditiveBlending
+
+    });
+
+    return new THREE.Mesh(
+        geometry,
+        material
+    );
+}
+
+
+for(
+    let i=0;
+    i<40;
+    i++
+){
+
+    const heart =
+    createHeart();
+
+    const angle =
+    Math.random()*Math.PI*2;
+
+    const radius =
+    35+Math.random()*45;
+
+    heart.position.set(
+
+        Math.cos(angle)*radius,
+
+        (Math.random()-.5)*65,
+
+        Math.sin(angle)*radius
+
+    );
+
+    const scale =
+    .25+Math.random()*.6;
+
+    heart.scale.setScalar(scale);
+
+    heart.userData.offset =
+    Math.random()*10;
+
+    heartGroup.add(heart);
+
+}
+
+
+/* =====================================================
+   CLICK EN FOTOS
+===================================================== */
+
+const raycaster =
+new THREE.Raycaster();
+
+const mouse =
+new THREE.Vector2(
+    -999,
+    -999
+);
+
+
+renderer.domElement.addEventListener(
+    "pointerdown",
+    event=>{
+
+        mouse.x =
+        (event.clientX/
+        window.innerWidth)*2-1;
+
+        mouse.y =
+        -(event.clientY/
+        window.innerHeight)*2+1;
+
+        raycaster.setFromCamera(
+            mouse,
+            camera
+        );
+
+
+        const intersections =
+        raycaster.intersectObjects(
+            photosGroup.children,
+            true
+        );
+
+
+        if(
+            intersections.length>0
+        ){
+
+            let selected =
+            intersections[0].object;
+
+
+            while(
+                selected.parent &&
+                selected.parent !==
+                photosGroup
+            ){
+
+                selected =
+                selected.parent;
+
+            }
+
+
+            if(
+                selected.parent ===
+                photosGroup
+            ){
+
+                const index =
+                selected.userData.index;
+
+
+                const message =
+                document.getElementById(
+                    "photoMessage"
+                );
+
+
+                message.textContent =
+                photoMessages[index];
+
+
+                message.classList.add(
+                    "show"
+                );
+
+
+                selected.scale.setScalar(
+                    1.15
+                );
+
+
+                setTimeout(
+                    ()=>{
+
+                        selected.scale.setScalar(1);
+
+                        message.classList.remove(
+                            "show"
+                        );
+
+                    },
+                    3000
+                );
+
+            }
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   MUSICA
+===================================================== */
+
+const music =
+document.getElementById("music");
+
+music.src = MUSIC;
+
+
+const musicButton =
+document.getElementById(
+    "musicButton"
+);
+
+
+document
+.getElementById("enterButton")
+.addEventListener(
+    "click",
+    async()=>{
+
+        document
+        .getElementById("intro")
+        .classList.add("hidden");
+
+
+        try{
+
+            music.volume = .7;
+
+            await music.play();
+
+            musicButton.textContent =
+            "♫ Música";
+
+        }
+
+        catch(error){
+
+            console.error(
+                "No se pudo reproducir la música:",
+                error
+            );
+
+            musicButton.textContent =
+            "▶ Reproducir";
+
+        }
+
+    }
+);
+
+
+musicButton.addEventListener(
+    "click",
+    async()=>{
+
+        if(music.paused){
+
+            try{
+
+                await music.play();
+
+                musicButton.textContent =
+                "♫ Música";
+
+            }
+
+            catch(error){
+
+                console.error(error);
+
+            }
+
+        }
+
+        else{
+
+            music.pause();
+
+            musicButton.textContent =
+            "▶ Reproducir";
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   ANIMACION
+===================================================== */
+
+const clock =
+new THREE.Clock();
+
+
+function animate(){
+
+    requestAnimationFrame(
+        animate
+    );
+
+
+    const time =
+    clock.getElapsedTime();
+
+
+    planet.rotation.y =
+    time*.025;
+
+
+    ring.rotation.z =
+    time*.055;
+
+
+    ringGlow.rotation.z =
+    time*.055;
+
+
+    orbitParticles.rotation.y =
+    time*.035;
+
+
+    stars.rotation.y =
+    time*.0015;
+
+
+    goldenDust.rotation.y =
+    -time*.003;
+
+
+    closeDust.rotation.y =
+    time*.006;
+
+
+    flowers.children.forEach(
+        flower=>{
+
+            flower.position.y =
+
+            flower.userData.baseY +
+
+            Math.sin(
+                time*.55+
+                flower.userData.offset
+            )*.65;
+
+            flower.rotation.y +=
+            .0008;
+
+        }
+    );
+
+
+    photosGroup.children.forEach(
+        photo=>{
+
+            photo.position.y =
+
+            photo.userData.baseY +
+
+            Math.sin(
+                time*.55+
+                photo.userData.offset
+            )*.8;
+
+            photo.rotation.z =
+
+            Math.sin(
+                time*.3+
+                photo.userData.offset
+            )*.025;
+
+        }
+    );
+
+
+    phraseGroup.children.forEach(
+        phrase=>{
+
+            phrase.position.y =
+
+            phrase.userData.baseY +
+
+            Math.sin(
+                time*.5+
+                phrase.userData.offset
+            )*.7;
+
+        }
+    );
+
+
+    heartGroup.children.forEach(
+        heart=>{
+
+            heart.position.y +=
+            Math.sin(
+                time*.3+
+                heart.userData.offset
+            )*.003;
+
+            heart.rotation.z =
+
+            Math.sin(
+                time*.4+
+                heart.userData.offset
+            )*.2;
+
+        }
+    );
+
+
+    controls.update();
+
+    composer.render();
+
+}
+
+
+animate();
+
+
+/* =====================================================
+   RESIZE
+===================================================== */
+
+window.addEventListener(
+    "resize",
+    ()=>{
+
+        camera.aspect =
+        window.innerWidth/
+        window.innerHeight;
+
+        camera.updateProjectionMatrix();
+
+        renderer.setSize(
+            window.innerWidth,
+            window.innerHeight
+        );
+
+        composer.setSize(
+            window.innerWidth,
+            window.innerHeight
+        );
+
+    }
+);
+
+
+/* =====================================================
+   QUITAR LOADING
+===================================================== */
+
+setTimeout(
+    ()=>{
+
+        document
+        .getElementById("loading")
+        .classList.add("finished");
+
+    },
+    1200
+);
+
+</script>
+
+</body>
+</html>
